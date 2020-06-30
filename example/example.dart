@@ -8,6 +8,7 @@ import 'package:args/args.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:pub_server/shelf_pubserver.dart';
+import 'package:sentry/sentry.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -16,24 +17,33 @@ import 'src/examples/file_repository.dart';
 import 'src/examples/http_proxy_repository.dart';
 
 final Uri pubDartLangOrg = Uri.parse('https://pub.dartlang.org');
+final SentryClient sentry = SentryClient(dsn: 'http://948c21a339fb4ffe9ae54c939fa6b246@test01.fn.brainco.cn:18081/4');
 
-void main(List<String> args) {
-  var parser = argsParser();
-  var results = parser.parse(args);
+void main(List<String> args) async {
+  try {
+    var parser = argsParser();
+    var results = parser.parse(args);
 
-  var directory = results['directory'] as String;
-  var host = results['host'] as String;
-  var port = int.parse(results['port'] as String);
-  var standalone = results['standalone'] as bool;
+    var directory = results['directory'] as String;
+    var host = results['host'] as String;
+    var port = int.parse(results['port'] as String);
+    var standalone = results['standalone'] as bool;
 
-  if (results.rest.isNotEmpty) {
-    print('Got unexpected arguments: "${results.rest.join(' ')}".\n\nUsage:\n');
-    print(parser.usage);
-    exit(1);
+    if (results.rest.isNotEmpty) {
+      print('Got unexpected arguments: "${results.rest.join(' ')}".\n\nUsage:\n');
+      print(parser.usage);
+      exit(1);
+    }
+
+    setupLogger();
+    await runPubServer(directory, host, port, standalone);
+  } catch(error, stackTrace) {
+    await sentry.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
   }
 
-  setupLogger();
-  runPubServer(directory, host, port, standalone);
 }
 
 Future<HttpServer> runPubServer(
