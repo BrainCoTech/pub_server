@@ -6,3 +6,4 @@ packages
 pubspec.lock
 .idea/
 pub_server-repository-data/
+log.txt
