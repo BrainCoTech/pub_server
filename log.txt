@@ -1,0 +1,77 @@
+2020-07-01 12:18:16.432797 INFO pubserver.shelf_pubserver Start simple upload. 
+2020-07-01 12:18:16.482468 INFO pubserver.shelf_pubserver Perform simple upload. 
+2020-07-01 12:18:16.575020 INFO pub_server.cow_repository Starting upload to local package repository. 
+2020-07-01 12:18:16.576145 INFO pub_server.file_repository Start uploading package. 
+2020-07-01 12:18:17.145441 INFO pub_server.file_repository Uploaded new demo_plugin/0.0.1 
+2020-07-01 12:18:17.150361 INFO pub_server.cow_repository Upload finished - demo_plugin@0.0.1. Invalidating in-memory cache. 
+2020-07-01 12:18:17.150821 INFO pubserver.shelf_pubserver Redirecting to found url. 
+2020-07-01 12:25:39.367483 INFO pubserver.shelf_pubserver Start simple upload. 
+2020-07-01 12:25:39.400116 INFO pubserver.shelf_pubserver Perform simple upload. 
+2020-07-01 12:25:39.470298 INFO pub_server.cow_repository Starting upload to local package repository. 
+2020-07-01 12:25:39.470372 INFO pub_server.file_repository Start uploading package. 
+2020-07-01 12:25:39.948505 WARNING pubserver.shelf_pubserver Error occured 
+#0      FileRepository.upload (file:///Users/jike/brainco/me/pub_server/example/src/examples/file_repository.dart:95:7)
+<asynchronous suspension>
+#1      CopyAndWriteRepository.upload (file:///Users/jike/brainco/me/pub_server/example/src/examples/cow_repository.dart:104:36)
+#2      ShelfPubServer._uploadSimple (package:pub_server/shelf_pubserver.dart:389:38)
+<asynchronous suspension>
+#3      ShelfPubServer.requestHandler (package:pub_server/shelf_pubserver.dart:202:16)
+#4      logRequests.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:shelf/src/middleware/logger.dart:30:46)
+#5      new Future.sync (dart:async/future.dart:224:31)
+#6      logRequests.<anonymous closure>.<anonymous closure> (package:shelf/src/middleware/logger.dart:30:23)
+#7      handleRequest (package:shelf/shelf_io.dart:101:29)
+#8      serveRequests.<anonymous closure>.<anonymous closure> (package:shelf/shelf_io.dart:63:34)
+#9      _rootRunUnary (dart:async/zone.dart:1134:38)
+#10     _CustomZone.runUnary (dart:async/zone.dart:1031:19)
+#11     _CustomZone.runUnaryGuarded (dart:async/zone.dart:933:7)
+#12     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#13     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:265:7)
+#14     _SyncStreamControllerDispatch._sendData (dart:async/stream_controller.dart:766:19)
+#15     _StreamController._add (dart:async/stream_controller.dart:642:7)
+#16     _StreamController.add (dart:async/stream_controller.dart:588:5)
+#17     _HttpServer._handleRequest (dart:_http/http_impl.dart:2828:19)
+#18     new _HttpConnection.<anonymous closure> (dart:_http/http_impl.dart:2586:19)
+#19     _rootRunUnary (dart:async/zone.dart:1134:38)
+#20     _CustomZone.runUnary (dart:async/zone.dart:1031:19)
+#21     _CustomZone.runUnaryGuarded (dart:async/zone.dart:933:7)
+#22     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#23     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:265:7)
+#24     _SyncStreamControllerDispatch._sendData (dart:async/stream_controller.dart:766:19)
+#25     _StreamController._add (dart:async/stream_controller.dart:642:7)
+#26     _StreamController.add (dart:async/stream_controller.dart:588:5)
+#27     _HttpParser._headersEnd (dart:_http/http_parser.dart:388:17)
+#28     _HttpParser._doParse (dart:_http/http_parser.dart:703:15)
+#29     _HttpParser._parse (dart:_http/http_parser.dart:320:7)
+#30     _HttpParser._onData (dart:_http/http_parser.dart:812:5)
+#31     _rootRunUnary (dart:async/zone.dart:1134:38)
+#32     _CustomZone.runUnary (dart:async/zone.dart:1031:19)
+#33     _CustomZone.runUnaryGuarded (dart:async/zone.dart:933:7)
+#34     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#35     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:265:7)
+#36     _SyncStreamControllerDispatch._sendData (dart:async/stream_controller.dart:766:19)
+#37     _StreamController._add (dart:async/stream_controller.dart:642:7)
+#38     _StreamController.add (dart:async/stream_controller.dart:588:5)
+#39     _Socket._onData (dart:io-patch/socket_patch.dart:1831:41)
+#40     _rootRunUnary (dart:async/zone.dart:1138:13)
+#41     _CustomZone.runUnary (dart:async/zone.dart:1031:19)
+#42     _CustomZone.runUnaryGuarded (dart:async/zone.dart:933:7)
+#43     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:338:11)
+#44     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:265:7)
+#45     _SyncStreamControllerDispatch._sendData (dart:async/stream_controller.dart:766:19)
+#46     _StreamController._add (dart:async/stream_controller.dart:642:7)
+#47     _StreamController.add (dart:async/stream_controller.dart:588:5)
+#48     new _RawSocket.<anonymous closure> (dart:io-patch/socket_patch.dart:1379:33)
+#49     _NativeSocket.issueReadEvent.issue (dart:io-patch/socket_patch.dart:899:14)
+#50     _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#51     _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#52     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#53     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+
+2020-07-01 12:25:39.965758 INFO pubserver.shelf_pubserver Finish simple upload (error: Bad state: `demo_plugin` already exists at version `0.0.1`.). 
+2020-07-01 12:26:05.871345 INFO pubserver.shelf_pubserver Start simple upload. 
+2020-07-01 12:26:05.899542 INFO pubserver.shelf_pubserver Perform simple upload. 
+2020-07-01 12:26:05.961985 INFO pub_server.cow_repository Starting upload to local package repository. 
+2020-07-01 12:26:05.962047 INFO pub_server.file_repository Start uploading package. 
+2020-07-01 12:26:06.447611 INFO pub_server.file_repository Uploaded new demo_plugin/0.0.1 
+2020-07-01 12:26:06.447809 INFO pub_server.cow_repository Upload finished - demo_plugin@0.0.1. Invalidating in-memory cache. 
+2020-07-01 12:26:06.447880 INFO pubserver.shelf_pubserver Redirecting to found url. 

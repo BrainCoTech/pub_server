@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:args/args.dart';
@@ -84,9 +85,30 @@ ArgParser argsParser() {
 }
 
 void setupLogger() {
-  Logger.root.onRecord.listen((LogRecord record) {
+  final file = File('log.txt');
+  var logBuffer = '';
+  Future<void> _saveLogToFile() async {
+    try{
+      if (logBuffer.isNotEmpty) {
+        await file.writeAsString('$logBuffer', mode: FileMode.append, flush: true);
+        logBuffer = '';
+      }
+    } catch (error, stackTrace) {
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+  Timer.periodic(Duration(seconds: 10), (_){
+
+    _saveLogToFile();
+  });
+  Logger.root.onRecord.listen((LogRecord record) async {
     var head = '${record.time} ${record.level} ${record.loggerName}';
     var tail = record.stackTrace != null ? '\n${record.stackTrace}' : '';
-    print('$head ${record.message} $tail');
+    var message = '$head ${record.message} $tail';
+    print(message);
+    logBuffer+='$message\r\n';
   });
 }
