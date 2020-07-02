@@ -18,7 +18,9 @@ import 'src/examples/file_repository.dart';
 import 'src/examples/http_proxy_repository.dart';
 
 final Uri pubDartLangOrg = Uri.parse('https://pub.dartlang.org');
-final SentryClient sentry = SentryClient(dsn: 'http://948c21a339fb4ffe9ae54c939fa6b246@test01.fn.brainco.cn:18081/4');
+final SentryClient sentry = SentryClient(
+    dsn:
+        'http://948c21a339fb4ffe9ae54c939fa6b246@test01.fn.brainco.cn:18081/4');
 
 void main(List<String> args) async {
   try {
@@ -31,20 +33,28 @@ void main(List<String> args) async {
     var standalone = results['standalone'] as bool;
 
     if (results.rest.isNotEmpty) {
-      print('Got unexpected arguments: "${results.rest.join(' ')}".\n\nUsage:\n');
+      print(
+          'Got unexpected arguments: "${results.rest.join(' ')}".\n\nUsage:\n');
       print(parser.usage);
       exit(1);
     }
 
     setupLogger();
+    setupCheckAlive();
     await runPubServer(directory, host, port, standalone);
-  } catch(error, stackTrace) {
+  } catch (error, stackTrace) {
     await sentry.captureException(
       exception: error,
       stackTrace: stackTrace,
     );
   }
+}
 
+void setupCheckAlive() {
+  var log = Logger('CheckAlive');
+  Timer.periodic(Duration(minutes: 10), (_) {
+    log.warning('I am alive');
+  });
 }
 
 Future<HttpServer> runPubServer(
@@ -88,9 +98,10 @@ void setupLogger() {
   final file = File('log.txt');
   var logBuffer = '';
   Future<void> _saveLogToFile() async {
-    try{
+    try {
       if (logBuffer.isNotEmpty) {
-        await file.writeAsString('$logBuffer', mode: FileMode.append, flush: true);
+        await file.writeAsString('$logBuffer',
+            mode: FileMode.append, flush: true);
         logBuffer = '';
       }
     } catch (error, stackTrace) {
@@ -100,8 +111,8 @@ void setupLogger() {
       );
     }
   }
-  Timer.periodic(Duration(seconds: 10), (_){
 
+  Timer.periodic(Duration(seconds: 10), (_) {
     _saveLogToFile();
   });
   Logger.root.onRecord.listen((LogRecord record) async {
@@ -109,6 +120,6 @@ void setupLogger() {
     var tail = record.stackTrace != null ? '\n${record.stackTrace}' : '';
     var message = '$head ${record.message} $tail';
     print(message);
-    logBuffer+='$message\r\n';
+    logBuffer += '$message\r\n';
   });
 }
